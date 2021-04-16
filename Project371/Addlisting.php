@@ -16,7 +16,7 @@
     $User_ID = $_SESSION["username"];
     $TodayDate= date("Y-m-d");
     
-    
+    if($_SERVER["REQUEST_METHOD"] == "POST"){
      
      if(empty($_POST['AdvTitle'])){
         echo "Please enter an Advertisement title";
@@ -94,6 +94,7 @@
         
 		
 
+    }
     }
     
      
