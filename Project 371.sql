@@ -25,6 +25,7 @@ CREATE TABLE IF NOT EXISTS Users
 User_ID varchar(20),
 UserFirst_Name varchar(30) NOT NULL,
 UserLast_Name varchar (30) NOT NULL,
+User_Pass varchar(30) NOT Null,
 Primary Key (User_ID)
 );
 
