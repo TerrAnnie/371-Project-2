@@ -96,7 +96,7 @@
 
                 <li>Ask us a question</li>
 
-                <li> Sign up</li>
+                <a href="SignUp.php"><button>Sign Up</button></a>
 
             </ul>
         </div>
@@ -108,7 +108,7 @@
 </body>
 </html>
 <?php
-	require_once  'login.php';
+	require_once  'connection.php';
 	$connection = mysqli_connect($db_hostname, $db_username,$db_password,$db_database);
 
 	if (!$connection)

@@ -52,14 +52,14 @@
             border: 2px solid black;
             position: absolute;
             right: -550px;
-            min-height: 100px;
+            height: 100px;
             width: 500px;
             margin: 0.5px;
         }
         }
     </style>
 
-   
+    Squid INC
 </head>
 <body>
     <center><h1>  Squid INC </h1></center>
@@ -86,7 +86,7 @@
         <div class="info">
             <ul>
                 <li>Current listings</li>
-                <a href="new_listing.php"><li>Add a new listing</li></a>
+
                 <li>Ask us a question</li>
 
                 <li> Sign up</li>

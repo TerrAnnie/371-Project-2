@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -88,8 +86,8 @@
 </body>
 </html>
 <?php
-    session_start();
-	require_once 'login.php';
+
+	require_once 'connection.php';
 
 	$connection = mysqli_connect($db_hostname, $db_username,$db_password,$db_database);
 
@@ -130,21 +128,15 @@
 		    }
             
 		    else{
-                 
-			    $username= isset ($_POST['username']) ?$_POST['username']:"";
+                $username= isset ($_POST['username']) ?$_POST['username']:"";
                 $query_find= "Select User_ID from Users where User_ID = '$username'";
                 $result= mysqli_query($connection, $query_find);
                 if(mysqli_num_rows($result)>0){
                     echo "This User_ID is already in use. Please try again";
-				}
+                }
                 else{
                  $usernameerr="";
-                
-				}
-               
-               
-               
-                
+                }
 		    }
 		    if(empty($_POST['pwd'])){
 			    echo "Please fill out the password field\n";
@@ -181,7 +173,7 @@
 		    if(empty($usernameerr)&& empty($passworderr) && empty($confirmpwderr) && empty($lnameerr) && empty($fnameerr)){
 			   echo "Working";
                $password = password_hash($pwd, PASSWORD_DEFAULT);
-			    $sql= "Insert into Users(User_ID, UserFirst_Name, UserLast_Name, User_Pass) values ('$username','$fname', '$lname', '$password')";
+			    $sql= "Insert into Users(User_ID, UserFirst_Name, UserLast_Name, User_Pass) values ('$username','$fname', '$lname', '$pwd')";
 			    $result= mysqli_query($connection, $sql);
                 if (mysqli_query($connection, $sql)) {
                     echo "New record created successfully";
@@ -189,13 +181,18 @@
                     else {
                         echo "Error: " . $sql . "<br>" . mysqli_error($connection);
                     }
-			    $_SESSION["username"] = $username;
-                header('Location: AddListing.php');
+			     $_SESSION['username']= $username;
+                header('Location: UserHomePage.php');
 			    if(!result){
 				    die("database access denied") . mysqli_error($connection);
 			    }
 		    }
-            
+            else{
+          
+            echo"$usernameerr";
+            echo" why $passworderr";
+           
+			}
             
 
 }
