@@ -37,7 +37,7 @@ Foreign Key (User_ID) references Users(User_ID)
 
 CREATE TABLE IF NOT EXISTS Advertisements
 (
-Advertisement_ID int(10),
+Advertisement_ID int(10) AUTO_INCREMENT,
 AdvTitle varchar(100) not null,
 AdvDetails varchar(100),
 AdvDateTime DATE not null,
@@ -54,11 +54,11 @@ Foreign Key (Status_ID) REFERENCES Statuses(Status_ID) ON DELETE RESTRICT,
 Primary Key (Advertisement_ID)
 );
 
-Insert Into Users (User_ID,UserFirst_Name, UserLast_Name) 
-Values  ('Jsmith', 'John', 'Smith'),
-('Ajackson', 'Ann', 'Jackson'),
-('Rkale', 'Rania', 'Kale'),
-('Sali', 'Samir', 'Ali');
+Insert Into Users (User_ID,User_Pass,UserFirst_Name, UserLast_Name) 
+Values  ('Jsmith', '1234', 'John', 'Smith'),
+('Ajackson', '1234','Ann', 'Jackson'),
+('Rkale','1234', 'Rania', 'Kale'),
+('Sali','1234', 'Samir', 'Ali');
 
 Insert Into Moderators Values
 ('Jsmith'),
