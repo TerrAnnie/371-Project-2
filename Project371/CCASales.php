@@ -25,8 +25,13 @@
 		</style>
 
 		<title> Child Care Advertisements</title>
+
 	</head>
 	<body>
+	<a href="Homepage1.php">Home</a> 
+	<a href="CATSales.php">Cars and Trucks</a>
+	<a href="ELCsales.php">Electronics</a> 
+	<a href="HOUSales.php">Housing</a> 
 	<center> <h1> Child Care Advertisements</h1> </center>
 		<center>
 			<table>

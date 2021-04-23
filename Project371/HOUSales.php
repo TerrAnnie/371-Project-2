@@ -27,6 +27,10 @@
 		<title> Housing Advertisements </title>
 	</head>
 	<body>
+	<a href="Homepage1.php">Home</a> 
+	<a href="CCASales.php">Child Care</a>
+	<a href="CATSales.php">Cars and Trucks</a>
+	<a href="ELCsales.php">Electronics</a> 
 	<center> <h1> Housing Sales</h1> </center>
 		<center>
 			<table>

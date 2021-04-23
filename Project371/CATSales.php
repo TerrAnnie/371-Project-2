@@ -24,9 +24,13 @@
 
 		</style>
 
-		<title> Electronic Advertisements</title>
+		<title> Car and Truck Sales</title>
 	</head>
 	<body>
+	<a href="Homepage1.php">Home</a> 
+	<a href="CCASales.php">Child Care</a>
+	<a href="ELCsales.php">Electronics</a> 
+	<a href="HOUSales.php">Housing</a> 
 	<center> <h1> Car and Truck Sales </h1> </center>
 		<center>
 			<table>

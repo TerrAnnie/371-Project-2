@@ -27,6 +27,10 @@
 		<title> Electronic Advertisements</title>
 	</head>
 	<body>
+	<a href="Homepage1.php">Home</a> 
+	<a href="CCASales.php">Child Care</a>
+	<a href="CATSales.php">Cars and Trucks</a>
+	<a href="HOUSales.php">Housing</a> 
 	<center> <h1> Electronic Advertisements </h1> </center>
 		<center>
 			<table>
