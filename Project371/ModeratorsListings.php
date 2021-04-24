@@ -1,77 +1,4 @@
-<?php
-    session_start();
-	require_once 'connection.php';
 
-	$connection = mysqli_connect($db_hostname, $db_username,$db_password,$db_database);
-
-	if (!$connection){
-	 die("Database access failed: " . mysqli_error($connection));
-
-	}
-
-    $ID_Number= 0;
-    $Status="";
-    $ID_Numbererr=$Status_Err= "Not empty";
-    $Moderator_ID = $_SESSION['username'];
-
-     if($_SERVER["REQUEST_METHOD"] == "POST"){
-        if(empty($_POST['id_num'])){
-    
-            echo "Please enter a number";
-		}
-        else{
-          $ID_Number = isset($_POST['id_num'])?$_POST['id_num']:"";
-          $query = "Select * from Advertisements where Advertisement_ID = '$ID_Number'";
-          $result= mysqli_query($connection, $query);
-          if(mysqli_num_rows($result)==0){
-            echo "This ID_Number doesn't exist";
-		  }
-          
-          else{
-            $ID_Numbererr= "";  
-		  }
-
-      
-      
-
-		}
-
-    if(empty($_POST['Status_ID'])){
-     echo "Please select a status";
-	}
-    else{
-   
-        $Status = isset($_POST['Status_ID'])?$_POST['Status_ID']:"";
-         echo "$Status";
-        
-       $Status_Err="";
-	}
-
-    if (empty($Status_Err) && empty($ID_Numbererr)){
-        $Update_Query= "Update Advertisements Set Status_ID = '$Status' where Advertisement_ID = '$ID_Number'";
-         $result = mysqli_query($connection, $Update_Query);
-          $SetModQuery= "Update Advertisements Set Moderator_ID ='$Moderator_ID' where Advertisement_ID = '$ID_Number'";
-          $result = mysqli_query($connection, $SetModQuery);
-       
-       
-         if($result){
-            echo "New record created successfully";
-         } 
-         else {
-             echo "Error: " . $query. "<br>" . mysqli_error($connection);
-            }
-            header('Location: ModeratorHomePage.php');
-			    if(!result){
-				    die("database access denied") . mysqli_error($connection);
-			    }
-                
-	}
-
-
-     }
-
-     mysqli_close ($connection);
-     ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -140,7 +67,7 @@
             border: 2px solid black;
             position: absolute;
             right: -550px;
-            height: 200px;
+            height: 100px;
             width: 500px;
             margin: 0.5px;
         }
@@ -166,61 +93,42 @@
 
         </div>
        
-        <div class="d">
-            <h2> Approve listings </h2>
-            <form method = "post" action=" ">
-                <label for "id_num"> Advertisement ID: </label> <br>
-                <input type = "number" id = "id-num" name = "id_num"> <br>
-                <label for "Status_ID" > Set Status:  </label> <br> 
-                <select name ="Status_ID" id= "Status_ID">
-                <option value = ""> Select... </option>
-                <option value = "AC"> Active </option>
-                <option value = "DI"> Disapprove</option>
-                <input type="submit" value="Submit">
-            </form>
-             
-
-
-        </div>
-    
-   
+       
 
         <div class="info">
             <ul>
+                 <li>Current listings</li>
                <a href= "CATSsales.php"> Car and Truck Listings </a><br>
                <a href= "ELCSsales.php"> Electronic Listings </a><br>
                <a href= "CCASsales.php"> ChildCare Listings</a><br>
                <a href= "HOUSsales.php"> Housing Listings</a><br>
-               <a href= "ModeratorsListings.php"> Moderator Listings </a><br>
-               <a href= "AddListing.php"> Add Listings</a> <br>
-               <a href ="ModeratorHomepage.php" >  Approve or Dissaprove Listings</a> <br>
-               <a href = "logout.php" >  Logout</a> 
+              <a href= "ModeratorsListings.php"> Listings you Manage</a><br>
+              <a href= "AddListing.php"> Add Listings</a><br>
+              <a href ="ModeratorHomepage.php" >  Approve or Dissaprove Listings</a> <br>
+              <a href = "logout.php" >  Logout</a>
+
+            
 
             </ul>
         </div>
     </div>
-
-    
      <div>
-         <br>
-              <br>
-               <br>   
-              <br>
-               <br>
-           <center> <h2> Listings needed for approval </h2> </center>
+           <center> <h2> Listings you Manage </h2> </center>
             <center>
 			<table>
 				<tr>
 					<th> Advertisement ID </th>
+                    <th> User_ID </th>
+
 					<th> Advertisement Name    </th>
 					<th> Advertisement Description</th>
 					<th> Date Posted</th>
 					<th> Price</th>
-					<th> Published By:</th>
-					<th> Moderator</th>
+					<th> Status_ID</th>
 				</tr>
 		</center>
         <?php
+            session_start();
 				require_once 'connection.php';
 
 				$connection = mysqli_connect($db_hostname, $db_username,$db_password,$db_database);
@@ -228,19 +136,22 @@
 				if (!$connection){
 					die("Database access failed: " . mysqli_error($connection));
 					}
-
+                $username= $_SESSION['username'];
+              
 				$query= "select Advertisement_ID, AdvTitle,AdvDetails,AdvDateTime,Price,Category_ID,User_ID,Moderator_ID, Status_ID from Advertisements";
 				
 				$result = mysqli_query($connection, $query);
 				if(mysqli_num_rows($result)> 0){
 		
 					while ($row= mysqli_fetch_array($result)){
-						if($row ['Status_ID'] == "PN"){
-							echo "<tr><td>". $row['Advertisement_ID'] ."</td><td>" . $row['AdvTitle'] ."</td><td>" . $row['AdvDetails'] ."</td><td>" . $row['AdvDateTime'] ."</td><td>" . $row['Price'] ."</td><td>" 
-						. $row['User_ID'] ."</td><td>" . $row['Moderator_ID'] . "</td></tr>"; 
+                 
+    
+						if($row['Moderator_ID'] == $username){
+							echo "<tr><td>". $row['Advertisement_ID'] ."</td><td>" .$row['User_ID']. "</td><td>" .$row['AdvTitle'] ."</td><td>" . $row['AdvDetails'] ."</td><td>" . $row['AdvDateTime'] ."</td><td>" .
+                            $row['Price'] ."</td><td>" . $row['Status_ID']."</td></tr>"; 
 					
 						}
-						}
+					}
 					
 					
 
@@ -251,6 +162,10 @@
 
         </div>
 
+   
+    <br>
+
+   
 
 </body>
 </html>

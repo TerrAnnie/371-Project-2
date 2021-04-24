@@ -85,11 +85,13 @@
 
         <div class="info">
             <ul>
-                <li>Current listings</li>
-
-                <li>Ask us a question</li>
-
-                <li> Sign up</li>
+               <a href= "CATSsales.php"> Car and Truck Listings </a><br>
+               <a href= "ELCSsales.php"> Electronic Listings </a><br>
+               <a href= "CCASsales.php"> ChildCare Listings</a><br>
+               <a href= "HOUSsales.php"> Housing Listings</a><br>
+              <a href = "Userslistings.php"> Your Listings </a> <br>
+              <a href= "AddListing.php"> Add Listings</a><br>
+              <a href = "logout.php" >  Logout</a> <br>
 
             </ul>
         </div>

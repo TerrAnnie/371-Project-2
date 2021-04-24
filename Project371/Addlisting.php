@@ -1,7 +1,7 @@
 <?php
     session_start();
 
-	require_once 'login.php';
+	require_once 'connection.php';
 
 	$connection = mysqli_connect($db_hostname, $db_username,$db_password,$db_database);
 
@@ -78,7 +78,7 @@
         ('$Adv_Title','$Adv_Descrp', '$TodayDate', 
         '$Adv_Price', '$Category_ID',
         '$User_ID',
-        'Null', 'AC')";
+        'Null', 'PN')";
         $result = mysqli_query($connection, $query);
         if($result){
             echo "New record created successfully";
@@ -196,7 +196,7 @@ mysqli_close($connection);
            <tr><td>Advertisement Title: </td><td><input type="varchar" name="AdvTitle"></td></tr>
            <tr><td>Advertisement Details: </td><td><input type="text" name="AdvDetails"></td></tr>
         
-           <tr><td>Price: </td><td><input type="float" name="Price"></td></tr>
+           <tr><td>Price: </td><td><input type="number" step= ".01" name="Price"></td></tr>
            <tr><td>Category ID: </td><td>
            <select name="Category_ID">
            <option value= "">Select.. </option>
@@ -215,9 +215,13 @@ mysqli_close($connection);
         
         <div class="info">
             <ul>
-                <li>Current listings</li>
-                <li>Ask us a question</li>
-                <li> Sign up</li>
+                  <a href= "CATSsales.php"> Car and Truck Listings </a><br>
+               <a href= "ELCSsales.php"> Electronic Listings </a><br>
+               <a href= "CCASsales.php"> ChildCare Listings</a><br>
+               <a href= "HOUSsales.php"> Housing Listings</a><br>
+                 <a href = "Userslistings.php"> Your Listings </a> <br>
+              <a href= "AddListing.php"> Add Listings</a><br>
+               <a href = "logout.php" >  Logout</a> 
             </ul>
         </div>
     </div>

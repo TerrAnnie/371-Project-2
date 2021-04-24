@@ -17,7 +17,7 @@
 </head>
 <body>
     <div class="signin">
-        <form method="post" action="login.php">
+        <form method="post" action="">
             <h2> <b>Sign in</b> </h2>
             <label for="username"> Username: </label><br>
             <input type="text" id="username" name="username"><br>
@@ -30,6 +30,7 @@
 </html>
 
 <?php
+    session_start();
 	require_once  'connection.php';
 	$connection = mysqli_connect($db_hostname, $db_username,$db_password,$db_database);
 
@@ -54,24 +55,41 @@
 		
 
     if($username != "" && $pwd != ""){
-         $sql_query = "select count(*) as cntUser from Users where User_ID ='".$username."' and User_Pass='".$pwd."'";
-        $result= mysqli_query($connection, $sql_query);
+    $count = 0;
+      $sql_query = "select count(*) as cntMod from Moderators where User_ID ='".$username."' and User_Pass='".$pwd."'";
+       $result= mysqli_query($connection, $sql_query);
         $row = mysqli_fetch_array($result);
-        $count = $row['cntUser'];
-        if ($count> 0){
+         $count += $row['cntMod'];
+          $sql_query = "select count(*) as cntUser from Users where User_ID ='".$username."' and User_Pass='".$pwd."'";
+        
+       $result= mysqli_query($connection, $sql_query);
+        $row = mysqli_fetch_array($result);
+     
+        $count += $row['cntUser'];
+        echo "$count";
+        if ($count == 1){
             $_SESSION['username']= $username;
             header('Location: UserHomePage.php');
-    
-	    }
-        
-        else {
+        }
+        if ($count== 2){
+            $_SESSION['username']= $username;
+            header('Location: ModeratorHomePage.php');
+        }
+
+       
+
+          else {
          $passworderr= "Invalid Log in Credentials";
          echo "$passworderr";
     
 	    }
+     
+        
+       
 
     
 	}
    
+  
 
 	?>
