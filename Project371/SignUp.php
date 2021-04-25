@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -86,7 +88,7 @@
 </body>
 </html>
 <?php
-
+    session_start();
 	require_once 'connection.php';
 
 	$connection = mysqli_connect($db_hostname, $db_username,$db_password,$db_database);
@@ -128,26 +130,38 @@
 		    }
             
 		    else{
-                $username= isset ($_POST['username']) ?$_POST['username']:"";
+                 
+			    $username= isset ($_POST['username']) ?$_POST['username']:"";
                 $query_find= "Select User_ID from Users where User_ID = '$username'";
                 $result= mysqli_query($connection, $query_find);
                 if(mysqli_num_rows($result)>0){
                     echo "This User_ID is already in use. Please try again";
-                }
+				}
                 else{
                  $usernameerr="";
-                }
+                
+				}
+               
+               
+               
+                
 		    }
 		    if(empty($_POST['pwd'])){
 			    echo "Please fill out the password field\n";
                 echo "<br>";
 		    }
+             if(strlen($_POST['pwd'])< 8){
+                echo "Please make password greater than 8 characters"; 
+                echo "<br>";
+            
+			}
+          
 		    else{
 			    $pwd= isset ($_POST['pwd']) ?$_POST['pwd']:"";
                 $passworderr="";
             
 			    }
-          
+           
             if (isset($_POST['Conpwd'])){
             if(empty($_POST['Conpwd'])){
 
@@ -172,8 +186,8 @@
 		   
 		    if(empty($usernameerr)&& empty($passworderr) && empty($confirmpwderr) && empty($lnameerr) && empty($fnameerr)){
 			   echo "Working";
-               $password = password_hash($pwd, PASSWORD_DEFAULT);
-			    $sql= "Insert into Users(User_ID, UserFirst_Name, UserLast_Name, User_Pass) values ('$username','$fname', '$lname', '$pwd')";
+               $password = password_hash($pwd, PASSWORD_DEFAULT, array  ('cost' => 12));
+			    $sql= "Insert into Users(User_ID, UserFirst_Name, UserLast_Name, User_Pass) values ('$username','$fname', '$lname', '$password')";
 			    $result= mysqli_query($connection, $sql);
                 if (mysqli_query($connection, $sql)) {
                     echo "New record created successfully";
@@ -181,18 +195,14 @@
                     else {
                         echo "Error: " . $sql . "<br>" . mysqli_error($connection);
                     }
-			     $_SESSION['username']= $username;
-                header('Location: UserHomePage.php');
+			    $_SESSION["username"] = $username;
+                 $_SESSION["role"] = "U";
+                header('Location: userhomepage.php');
 			    if(!result){
 				    die("database access denied") . mysqli_error($connection);
 			    }
 		    }
-            else{
-          
-            echo"$usernameerr";
-            echo" why $passworderr";
-           
-			}
+            
             
 
 }

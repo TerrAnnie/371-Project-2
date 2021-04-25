@@ -12,14 +12,16 @@
     $Adv_Title = $Adv_Descrp= $Category_ID= " ";
     
     $Adv_Price = 0;
-    $TitleErr= $Adv_PriceErr= $AdvDescpErr= $CatError= "Not empty";
+    $TitleErr= $Adv_PriceErr= $AdvDescpErr= $CatError= "";
     $User_ID = $_SESSION["username"];
     $TodayDate= date("Y-m-d");
+    $Sumbmited= "These Items have been succesfuly submitted";
+    $SubmittedCheck = false;
     
     if($_SERVER["REQUEST_METHOD"] == "POST"){
      
      if(empty($_POST['AdvTitle'])){
-        echo "Please enter an Advertisement title";
+        $TitleErr= "Please enter an Advertisement title";
      
 	 }
      else{
@@ -29,7 +31,7 @@
      
 	 }
      if(empty($_POST['AdvDetails'])){
-        echo "Please enter the Advertisments details";
+       $AdvDescpErr ="Please enter the Advertisments details";
      
 	 }
      else{
@@ -39,7 +41,7 @@
      
 	 }
      if(empty($_POST['Price'])){
-        echo "Please enter a Price";
+        $Adv_PriceErr = "Please enter a Price";
      
 	 }
      else{
@@ -50,7 +52,7 @@
 	 }
    
       if(empty($_POST['Category_ID'])){
-        echo "Please select a Category";
+        $CatError = "Please select a Category";
      
 	 }
      else{
@@ -73,6 +75,8 @@
      
 	 }
      if (empty($CatError)&& empty($Adv_PriceErr)&& empty($AdvDescpErr)&& empty($TitleErr)){
+      $SubmittedCheck = true;
+    
     
         $query= "Insert Into Advertisements(AdvTitle, AdvDetails, AdvDateTime, Price,Category_ID,User_ID,Moderator_ID,Status_ID) values 
         ('$Adv_Title','$Adv_Descrp', '$TodayDate', 
@@ -156,7 +160,7 @@ mysqli_close($connection);
             position: absolute;
             font-size: 20px;
             right: -950px;
-            height: 100px;
+            height: 300px;
             width: 300px;
             margin: 0.5px;
         }
@@ -206,20 +210,51 @@ mysqli_close($connection);
            <option value= "CCA"> Child Care</option>
            </select>
            </td></tr>
+         
           
            <tr><td><input type="submit" value="Submit"></td><td></td>
        </table>
+
    </form>
+     <?php
+           echo "<p style = 'color:red'> $TitleErr </p>" ;
+           echo "<p style = 'color:red'> $AdvDescpErr </p>" ;
+           echo "<p style = 'color:red'> $Adv_PriceErr </p>" ;
+           echo "<p style = 'color:red'> $CatError </p>" ;
+           if ($SubmittedCheck){
+           echo "$Sumbmited <br>";
+
+           }
+           
+           
+           
+           ?>
 </center>
         </div>
         
         <div class="info">
             <ul>
-                  <a href= "CATSsales.php"> Car and Truck Listings </a><br>
-               <a href= "ELCSsales.php"> Electronic Listings </a><br>
-               <a href= "CCASsales.php"> ChildCare Listings</a><br>
-               <a href= "HOUSsales.php"> Housing Listings</a><br>
-                 <a href = "Userslistings.php"> Your Listings </a> <br>
+                 <a href= "Homepage1.php">HomePage </a><br>
+               <a href= "CATsales.php"> Car and Truck Listings </a><br>
+               <a href= "ELCsales.php"> Electronic Listings </a><br>
+               <a href= "CCAsales.php"> ChildCare Listings</a><br>
+               <a href= "HOUsales.php"> Housing Listings</a><br>
+                <?php 
+               
+               $role= $_SESSION['role'];
+               if($role == 'MU' || $role == 'U'){
+               echo "<a href= 'AddListing.php' Add Listings</a> <br>";
+               echo "<a href = 'Userslistings.php'> Your Listings </a> <br>";
+                }
+                if($role == 'M' || $role == 'MU'){
+                echo " <a href ='ModeratorHomepage.php' >  Approve or Dissaprove Listings</a> <br>";
+                echo " <a href= 'ModeratorsListings.php'> Moderator Listings </a><br>";
+				}
+               
+               
+               
+               ?>
+                 
               <a href= "AddListing.php"> Add Listings</a><br>
                <a href = "logout.php" >  Logout</a> 
             </ul>

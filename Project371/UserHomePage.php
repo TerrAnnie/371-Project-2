@@ -42,7 +42,7 @@
             position: absolute;
             font-size: 20px;
             right: -950px;
-            height: 100px;
+            height: 300px;
             width: 300px;
             margin: 0.5px;
         }
@@ -78,17 +78,18 @@
 
         </div>
         <div class="d">
-            <h2> Newest Listings </h2>
+            <h2> Newest Listings </h2> 
 
 
         </div>
 
         <div class="info">
             <ul>
-               <a href= "CATSsales.php"> Car and Truck Listings </a><br>
-               <a href= "ELCSsales.php"> Electronic Listings </a><br>
-               <a href= "CCASsales.php"> ChildCare Listings</a><br>
-               <a href= "HOUSsales.php"> Housing Listings</a><br>
+             <a href= "Homepage1.php">HomePage </a><br>
+               <a href= "CATSales.php"> Car and Truck Listings </a><br>
+               <a href= "ELCSales.php"> Electronic Listings </a><br>
+               <a href= "CCASales.php"> ChildCare Listings</a><br>
+               <a href= "HOUSales.php"> Housing Listings</a><br>
               <a href = "Userslistings.php"> Your Listings </a> <br>
               <a href= "AddListing.php"> Add Listings</a><br>
               <a href = "logout.php" >  Logout</a> <br>

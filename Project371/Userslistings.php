@@ -57,7 +57,7 @@
             position: absolute;
             font-size: 20px;
             right: -950px;
-            height: 150px;
+            height: 250px;
             width: 300px;
             margin: 0.5px;
         }
@@ -95,14 +95,27 @@
       
         <div class="info">
             <ul>
-               <a href= "CATSsales.php"> Car and Truck Listings </a><br>
-               <a href= "ELCSsales.php"> Electronic Listings </a><br>
-               <a href= "CCASsales.php"> ChildCare Listings</a><br>
-               <a href= "HOUSsales.php"> Housing Listings</a><br>
+                 <a href= "Homepage1.php">HomePage </a><br>
+               <a href= "CATsales.php"> Car and Truck Listings </a><br>
+               <a href= "ELCsales.php"> Electronic Listings </a><br>
+               <a href= "CCAsales.php"> ChildCare Listings</a><br>
+               <a href= "HOUsales.php"> Housing Listings</a><br>
+               <a href = 'Userslistings.php'> Your Listings </a> <br>
+               <a href = 'AddListing.php'> Add Listings </a> <br>
+               <?php
+                 session_start();
+                 $role = $_SESSION['role'];
+                
+               if($role == 'MU'){
+              
+               echo " <a href= 'ModeratorsListings.php'> Listings You Manage</a><br>";
+               echo "<a href ='ModeratorHomepage.php' >  Approve or Dissaprove Listings</a> <br>";
+                }
+               
 
-
-             <a href = "Userslistings.php"> Your Listings </a> <br>
-              <a href= "AddListing.php"> Add Listings</a><br>
+               
+               ?>
+          
                <a href = "logout.php" >  Logout</a> 
 
             </ul>
@@ -125,7 +138,7 @@
 				</tr>
 		</center>
         <?php
-            session_start();
+          
 				require_once 'connection.php';
             
 				$connection = mysqli_connect($db_hostname, $db_username,$db_password,$db_database);
@@ -141,7 +154,7 @@
                 
 		
 					while ($row= mysqli_fetch_array($result)){
-						if($row['User_ID'] == $username){
+						if($row['User_ID'] == $username && $row ['Status_ID'] != 'PN'){
 							echo "<tr><td>". $row['Advertisement_ID'] ."</td><td>" . $row['AdvTitle'] ."</td><td>" . $row['AdvDetails'] ."</td><td>" . $row['AdvDateTime'] ."</td><td>" .
                             $row['Price'] ."</td><td>" . $row['Moderator_ID'] ."</td><td>". $row['Status_ID'].  "</td></tr>"; 
 					

@@ -24,14 +24,34 @@
 
 		</style>
 
-		<title> Electronic Advertisements</title>
+		<title> Car and Truck Sales</title>
 	</head>
 	<body>
 	<a href="Homepage1.php">Home</a> 
 	<a href="CCASales.php">Child Care</a>
-	<a href="CATSales.php">Cars and Trucks</a>
+	<a href="ELCsales.php">Electronics</a> 
 	<a href="HOUSales.php">Housing</a> 
-	<center> <h1> Electronic Advertisements </h1> </center>
+	<?php
+	session_start();
+	 $role = '';
+                    if(!isset($_SESSION['role'])){
+                        $role = "G";
+					}
+                    else{
+                    $role = $_SESSION['role'];
+                    
+					}
+	
+	 if($role == 'MU' || $role == 'M'){
+                        echo "<a href='ModeratorHomepage.php'> UserHomepage </a>";
+                    
+					}
+                    else{
+                        echo "<a href='UserHomepage.php'> UserHomepage </a>";
+                    
+					}
+					?>
+	<center> <h1> Car and Truck Sales </h1> </center>
 		<center>
 			<table>
 				<tr>
@@ -45,7 +65,8 @@
 				</tr>
 		</center>
 				<?php
-				require_once 'login.php';
+		
+				require_once 'connection.php';
 
 				$connection = mysqli_connect($db_hostname, $db_username,$db_password,$db_database);
 
@@ -59,7 +80,7 @@
 				if(mysqli_num_rows($result)> 0){
 		
 					while ($row= mysqli_fetch_array($result)){
-						if($row['Category_ID']== "ELC" && $row ['Status_ID'] == "AC"){
+						if($row['Category_ID']== "CAT" && $row ['Status_ID'] == "AC"){
 							echo "<tr><td>". $row['Advertisement_ID'] ."</td><td>" . $row['AdvTitle'] ."</td><td>" . $row['AdvDetails'] ."</td><td>" . $row['AdvDateTime'] ."</td><td>" . $row['Price'] ."</td><td>" 
 						. $row['User_ID'] ."</td><td>" . $row['Moderator_ID'] . "</td></tr>"; 
 					

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,7 +30,7 @@
             position: absolute;
             font-size: 20px;
             right: -950px;
-            height: 100px;
+            height: 300px;
             width: 300px;
             margin: 0.5px;
         }
@@ -63,20 +62,47 @@
 
     <div class="a">
         <div class="d">
-            <h2> Newest Listings </h2>
+            <h2> Weekly Updates:</h2>
+            <p> The Sky is still very much blue </p>
 
 
         </div>
 
         <div class="info">
             <ul>
-                <li>Current listings</li>
+                <a href= "CATSales.php"> Car and Truck Listings </a><br>
+               <a href= "ELCSales.php"> Electronic Listings </a><br>
+               <a href= "CCASales.php"> ChildCare Listings</a><br>
+               <a href= "HOUSales.php"> Housing Listings</a><br>
+               <?php
 
-                <li>Ask us a question</li>
+                    session_start();
+                    $role = '';
+                    if(!isset($_SESSION['role'])){
+                        $role = "G";
+					}
+                    else{
+                    $role = $_SESSION['role'];
+                    
+					}
+                    
+                    if($role == 'G'){
+                        echo "<a href='login.php'><button>Log in</button></a>";
+                        echo "<a href='SignUp.php'><button>Sign Up</button></a>";
+                    
+					}
+                    elseif($role == 'MU' || $role == 'M'){
+                        echo "<a href='ModeratorHomepage.php'> UserHomepage </a>";
+                    
+					}
+                    else{
+                        echo "<a href='UserHomepage.php'> UserHomepage </a>";
+                    
+					}
+          
 
-                <a href="login.php"><button>Log in</button></a>
-
-                <a href="SignUp.php"><button>Sign Up</button></a>
+               
+                ?>
 
             </ul>
         </div>

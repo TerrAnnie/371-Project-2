@@ -38,6 +38,7 @@
         die("Database access failed: " . mysqli_error($connection));
 
 	$username = "";
+    $role="";
     $pwd= "";
     $usernameerr= $passworderr= " ";
 		
@@ -55,35 +56,74 @@
 		
 
     if($username != "" && $pwd != ""){
-    $count = 0;
-      $sql_query = "select count(*) as cntMod from Moderators where User_ID ='".$username."' and User_Pass='".$pwd."'";
+    $Ucount = 0;//Usercount
+    $Mcount = 0;//Moderator Count
+    $PassCheck = false;
+      $sql_query = "select count(*) as cntMod from Moderators where User_ID = '$username'";
+    
        $result= mysqli_query($connection, $sql_query);
         $row = mysqli_fetch_array($result);
-         $count += $row['cntMod'];
-          $sql_query = "select count(*) as cntUser from Users where User_ID ='".$username."' and User_Pass='".$pwd."'";
+         $Mcount += $row['cntMod'];
+
+       $sql_query = "select count(*) as cntUser from Users where User_ID ='".$username."'"; 
+       $result= mysqli_query($connection, $sql_query);
+        $row = mysqli_fetch_array($result);
+        $Ucount += $row['cntUser'];
+    
+
+        if ($Ucount == 1){//Checks the stored hash password
+            $query = "Select * from Users where User_ID = '$username' ";
+             $result= mysqli_query($connection, $query);
+             $row = mysqli_fetch_array($result);
+             $password = $row['User_Pass'];
+             if (password_verify($pwd, $password)){
+                $PassCheck = true;
+             
+			 }
+
         
-       $result= mysqli_query($connection, $sql_query);
-        $row = mysqli_fetch_array($result);
+		}
+         elseif ($Mcount == 1){//Checks the stored hash password
+            $query = "Select * from Moderators where User_ID = '$username' ";
+             $result= mysqli_query($connection, $query);
+             $row = mysqli_fetch_array($result);
+             $password = $row['User_Pass'];
+             if (password_verify($pwd, $password)){
+                $PassCheck = true;
+             
+			 }
+
+        
+  
+
      
-        $count += $row['cntUser'];
-        echo "$count";
-        if ($count == 1){
+
+        
+		}
+        if ($Ucount == 1 && $Mcount == 0 && $PassCheck){//Check if they're only a user'
+            
             $_SESSION['username']= $username;
+            $_SESSION['role']= "U";
             header('Location: UserHomePage.php');
         }
-        if ($count== 2){
+        if ($Mcount== 1 && $Ucount ==1 && $PassCheck){//Check if they're both a user and a mod'
             $_SESSION['username']= $username;
+            $_SESSION['role']= "MU";
             header('Location: ModeratorHomePage.php');
         }
 
-       
+        if ($Mcount==1 && $Ucount == 0 && $PassCheck){//Check if they're only a mod'
+            $_SESSION['username']= $username;
+            $_SESSION['role']= "M";
+            header('Location: ModeratorHomePage.php');
+        
+		}
 
-          else {
-         $passworderr= "Invalid Log in Credentials";
-         echo "$passworderr";
-    
-	    }
-     
+       if (!$PassCheck){
+            echo "$Ucount";  
+		}
+
+         
         
        
 

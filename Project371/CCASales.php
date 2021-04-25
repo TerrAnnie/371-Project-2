@@ -32,6 +32,26 @@
 	<a href="CATSales.php">Cars and Trucks</a>
 	<a href="ELCsales.php">Electronics</a> 
 	<a href="HOUSales.php">Housing</a> 
+	<?php
+	session_start();
+	 $role = '';
+                    if(!isset($_SESSION['role'])){
+                        $role = "G";
+					}
+                    else{
+                    $role = $_SESSION['role'];
+                    
+					}
+	
+	 if($role == 'MU' || $role == 'M'){
+                        echo "<a href='ModeratorHomepage.php'> UserHomepage </a>";
+                    
+					}
+                    else{
+                        echo "<a href='UserHomepage.php'> UserHomepage </a>";
+                    
+					}
+					?>
 	<center> <h1> Child Care Advertisements</h1> </center>
 		<center>
 			<table>
@@ -46,7 +66,8 @@
 				</tr>
 		</center>
 				<?php
-				require_once 'login.php';
+				
+				require_once 'connection.php';
 
 				$connection = mysqli_connect($db_hostname, $db_username,$db_password,$db_database);
 
@@ -81,5 +102,4 @@
 
 	</body>
 </html>
-
 	

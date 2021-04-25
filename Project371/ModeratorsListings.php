@@ -57,7 +57,7 @@
             position: absolute;
             font-size: 20px;
             right: -950px;
-            height: 100px;
+            height: 250px;
             width: 300px;
             margin: 0.5px;
         }
@@ -97,11 +97,11 @@
 
         <div class="info">
             <ul>
-                 <li>Current listings</li>
-               <a href= "CATSsales.php"> Car and Truck Listings </a><br>
-               <a href= "ELCSsales.php"> Electronic Listings </a><br>
-               <a href= "CCASsales.php"> ChildCare Listings</a><br>
-               <a href= "HOUSsales.php"> Housing Listings</a><br>
+                 <a href= "Homepage1.php">HomePage </a><br>
+               <a href= "CATsales.php"> Car and Truck Listings </a><br>
+               <a href= "ELCSales.php"> Electronic Listings </a><br>
+               <a href= "CCAsales.php"> ChildCare Listings</a><br>
+               <a href= "HOUsales.php"> Housing Listings</a><br>
               <a href= "ModeratorsListings.php"> Listings you Manage</a><br>
               <a href= "AddListing.php"> Add Listings</a><br>
               <a href ="ModeratorHomepage.php" >  Approve or Dissaprove Listings</a> <br>

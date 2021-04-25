@@ -11,25 +11,35 @@
 
     $ID_Number= 0;
     $Status="";
-    $ID_Numbererr=$Status_Err= "Not empty";
+    $ID_Numbererr=$Status_Err= "";
     $Moderator_ID = $_SESSION['username'];
 
      if($_SERVER["REQUEST_METHOD"] == "POST"){
         if(empty($_POST['id_num'])){
     
-            echo "Please enter a number";
+            $ID_Number= "Please enter a number";
 		}
         else{
           $ID_Number = isset($_POST['id_num'])?$_POST['id_num']:"";
           $query = "Select * from Advertisements where Advertisement_ID = '$ID_Number'";
           $result= mysqli_query($connection, $query);
+          $row= mysqli_fetch_array($result);
           if(mysqli_num_rows($result)==0){
-            echo "This ID_Number doesn't exist";
+            $ID_Numbererr="This ID_Number doesn't exist";
+		  }
+         else{
+      
+          if($row['Status_ID'] != "PN"){
+            $ID_Numbererr= "This ID_Doesn't need approval";
+		  }
+           if($row['User_ID'] == $Moderator_ID){
+            $ID_Numbererr ="You can't edit your own listing";
 		  }
           
-          else{
-            $ID_Numbererr= "";  
-		  }
+         
+         
+		 }
+         
 
       
       
@@ -37,12 +47,11 @@
 		}
 
     if(empty($_POST['Status_ID'])){
-     echo "Please select a status";
+    $Status_Err= "Please select a status";
 	}
     else{
    
         $Status = isset($_POST['Status_ID'])?$_POST['Status_ID']:"";
-         echo "$Status";
         
        $Status_Err="";
 	}
@@ -130,7 +139,7 @@
             position: absolute;
             font-size: 20px;
             right: -950px;
-            height: 100px;
+            height: 300px;
             width: 300px;
             margin: 0.5px;
         }
@@ -179,7 +188,10 @@
                 <input type="submit" value="Submit">
             </form>
              
-
+             <?php
+             echo"<p style = 'color:red'> $ID_Numbererr </p>";
+             echo "<p style = 'color:red'> $Status_Err </p>";
+             ?>
 
         </div>
     
@@ -187,12 +199,25 @@
 
         <div class="info">
             <ul>
-               <a href= "CATSsales.php"> Car and Truck Listings </a><br>
-               <a href= "ELCSsales.php"> Electronic Listings </a><br>
-               <a href= "CCASsales.php"> ChildCare Listings</a><br>
-               <a href= "HOUSsales.php"> Housing Listings</a><br>
-               <a href= "ModeratorsListings.php"> Moderator Listings </a><br>
-               <a href= "AddListing.php"> Add Listings</a> <br>
+                <a href= "Homepage1.php">HomePage </a><br>
+               <a href= "CATSales.php"> Car and Truck Listings </a><br>
+               <a href= "ELCsales.php"> Electronic Listings </a><br>
+               <a href= "CCAsales.php"> ChildCare Listings</a><br>
+               <a href= "HOUsales.php"> Housing Listings</a><br>
+               <a href= "ModeratorsListings.php"> Listings You Manage</a><br>
+               <?php 
+               $role= $_SESSION['role'];
+              
+               if($role == 'MU'){
+              
+               echo "<a href= 'AddListing.php'> Add Listings</a> <br>";
+               echo "<a href = 'Userslistings.php'> Your Listings </a> <br>";
+                }
+               
+               
+               
+               ?>
+              
                <a href ="ModeratorHomepage.php" >  Approve or Dissaprove Listings</a> <br>
                <a href = "logout.php" >  Logout</a> 
 
