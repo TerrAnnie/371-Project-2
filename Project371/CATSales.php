@@ -46,9 +46,9 @@
                         echo "<a href='ModeratorHomepage.php'> UserHomepage </a>";
                     
 					}
-                    else{
-                        echo "<a href='UserHomepage.php'> UserHomepage </a>";
-                    
+                    elseif($role == 'U'){
+						 echo "<a href='UserHomepage.php'> UserHomepage </a>";
+					
 					}
 					?>
 	<center> <h1> Car and Truck Sales </h1> </center>

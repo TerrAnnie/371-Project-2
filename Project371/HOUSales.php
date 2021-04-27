@@ -41,16 +41,18 @@
                     $role = $_SESSION['role'];
                     
 					}
+					 
 
-	 if($role == 'MU' || $role == 'M'){
+					 
+					if($role == 'MU' || $role == 'M'){
                         echo "<a href='ModeratorHomepage.php'> UserHomepage </a>";
                     
 					}
-                    else{
-                        echo "<a href='UserHomepage.php'> UserHomepage </a>";
-                    
+					elseif($role == 'U'){
+						 echo "<a href='UserHomepage.php'> UserHomepage </a>";
+					
 					}
-					?>
+                    ?>
 	<center> <h1> Housing Sales</h1> </center>
 		<center>
 			<table>
