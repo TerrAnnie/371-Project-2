@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,13 +25,24 @@
             font-family: Courier New, Courier, monospace;
         }
 
+        .signin {
+            position: absolute;
+            background-color: lightblue;
+            color: black;
+            border: 2px solid black;
+            padding: 10px;
+            right: 150px;
+            width: 200px;
+            height: 200px;
+        }
+
         .info {
             background-color: lightcyan;
             border: 2px solid black;
             position: absolute;
             font-size: 20px;
             right: -950px;
-            height: 300px;
+            height: 100px;
             width: 300px;
             margin: 0.5px;
         }
@@ -40,14 +52,14 @@
             border: 2px solid black;
             position: absolute;
             right: -550px;
-            height: 100px;
+           
             width: 500px;
             margin: 0.5px;
         }
         }
     </style>
 
-  
+    Squid INC
 </head>
 <body>
     <center><h1>  Squid INC </h1></center>
@@ -61,62 +73,46 @@
     </div>
 
     <div class="a">
-        <div class="d">
-            <h2> Weekly Updates:</h2>
-            <p> The Sky is still very much blue </p>
-
+        <div class="signin">
+            <p> Logged in </p>
 
         </div>
+        <div class="d">
+          
+            <center><h2> <b> Create New Advertisement </b></h2> 
+   
+   <form method="post" action="add_listing.php">
+   <table>
+           <tr><td>Advertisement ID: </td><td><input type="int" name="Advertisement_ID"></td></tr>
+           <tr><td>Advertisement Title: </td><td><input type="varchar" name="AdvTitle"></td></tr>
+           <tr><td>Advertisement Details: </td><td><input type="varchar" name="AdvDetails"></td></tr>
+           <tr><td>Advertisement Time: </td><td><input type="date" name="AdvDateTime"></td></tr>
+           <tr><td>Price: </td><td><input type="float" name="Price"></td></tr>
+           <tr><td>User ID: </td><td><input type="varchar" name="User_ID"></td></tr>
+           <tr><td>Moderator ID: </td><td><input type="varchar" name="Moderator_ID"></td></tr>
+           <tr><td>Category ID: </td><td><input type="varchar" name="Category_ID"></td></tr>
+           <tr><td>Status ID: </td><td><input type="varchar" name="Status_ID"></td></tr>
+           <tr><td><input type="submit" value="Submit"></td><td></td>
+       </table>
+   </form>
+</center>
 
+        </div>
+        
         <div class="info">
             <ul>
-                <a href= "CATSales.php"> Car and Truck Listings </a><br>
-               <a href= "ELCSales.php"> Electronic Listings </a><br>
-               <a href= "CCASales.php"> ChildCare Listings</a><br>
-               <a href= "HOUSales.php"> Housing Listings</a><br>
-               <?php
+                <li>Current listings</li>
 
-                    session_start();
-                    $role = '';
-                    if(!isset($_SESSION['role'])){
-                        $role = "G";
-					}
-                    else{
-                    $role = $_SESSION['role'];
-                    
-					}
-                    
-                    if($role == 'G'){
-                        echo "<a href='login.php'>Log in</a><br>";
-                        echo "<a href='SignUp.php'>Sign Up</a><br>";
-                    
-					}
-                    elseif($role == 'MU' || $role == 'M'){
-                        echo "<a href='ModeratorHomepage.php'> UserHomepage </a>";
-                    
-					}
-                    else{
-                        echo "<a href='UserHomepage.php'> UserHomepage </a>";
-                    
-					}
-          
+                <li>Ask us a question</li>
 
-               
-                ?>
+                <li>Sign up</li>
 
             </ul>
         </div>
     </div>
     <br>
-    <div>
-        <center><h2> <b> Today's Listings </b></h2> </center>
-    </div>
+
+    
+
 </body>
 </html>
-<?php
-	require_once  'connection.php';
-	$connection = mysqli_connect($db_hostname, $db_username,$db_password,$db_database);
-
-	if (!$connection)
-        die("Database access failed: " . mysqli_error($connection));
-?>

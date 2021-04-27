@@ -6,9 +6,6 @@
         table,th {
 				border: 1px solid black;
 				background-color: lightblue;
-				
-			
-
 			}
 
             table {
@@ -73,17 +70,15 @@
         }
         }
     </style>
-
-    Squid INC
 </head>
 <body>
     <center><h1>  Squid INC </h1></center>
     <div class="divbio">
         <h2> About us</h2>
         <p>
-            Founded in 2006, we are a company dedicated to helping customers resell their unwanted items. All items listed on the website or verfied by our moderators.
-            In order to provide a safe enviorment all sells are handled by our moderators, and all the money made from the sell goes to the seller. We have seen our business grow
-            since 2006 and we can't wait for it to grow even more
+            Founded in 2006, we are a company dedicated to helping customers resell their unwanted items. All items listed on the website are verified by our moderators.
+            In order to provide a safe environment, all sales are handled by our moderators and all the money made from the sale goes to the seller. We have seen our business grow
+            since 2006 and we can't wait for it to grow even more.
         </p>
     </div>
 
@@ -95,28 +90,28 @@
       
         <div class="info">
             <ul>
-                 <a href= "Homepage1.php">HomePage </a><br>
+                <a href= "Homepage1.php">HomePage </a><br>
                <a href= "CATsales.php"> Car and Truck Listings </a><br>
                <a href= "ELCsales.php"> Electronic Listings </a><br>
-               <a href= "CCAsales.php"> ChildCare Listings</a><br>
-               <a href= "HOUsales.php"> Housing Listings</a><br>
-               <a href = 'Userslistings.php'> Your Listings </a> <br>
-               <a href = 'AddListing.php'> Add Listings </a> <br>
+               <a href= "CCAsales.php"> ChildCare Listings </a><br>
+               <a href= "HOUsales.php"> Housing Listings </a><br>
+               <a href= 'Userslistings.php'> Your Listings </a><br>
+               <a href= 'AddListing.php'> Add Listings </a><br>
                <?php
                  session_start();
                  $role = $_SESSION['role'];
                 
                if($role == 'MU'){
               
-               echo " <a href= 'ModeratorsListings.php'> Listings You Manage</a><br>";
-               echo "<a href ='ModeratorHomepage.php' >  Approve or Dissaprove Listings</a> <br>";
+               echo "<a href= 'ModeratorsListings.php'> Listings You Manage</a><br>";
+               echo "<a href= 'ModeratorHomepage.php' > Approve or Disapprove Listings</a> <br>";
                 }
                
 
                
                ?>
           
-               <a href = "logout.php" >  Logout</a> 
+               <a href ="logout.php">  Logout</a>
 
             </ul>
         </div>
@@ -148,7 +143,7 @@
 					}
                 $username= $_SESSION['username'];
 				$query= "select Advertisement_ID, AdvTitle,AdvDetails,AdvDateTime,Price,Category_ID,User_ID,Moderator_ID, Status_ID from Advertisements";
-				echo "<center> <h2> Active(AC) or Dissaproved(DI) Listings </h2> </center>";
+				echo "<center> <h2> Active(AC) or Disapproved(DI) Listings </h2> </center>";
 				$result = mysqli_query($connection, $query);
 				if(mysqli_num_rows($result)> 0){
                 

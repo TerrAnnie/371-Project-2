@@ -81,9 +81,9 @@
     <div class="divbio">
         <h2> About us</h2>
         <p>
-            Founded in 2006, we are a company dedicated to helping customers resell their unwanted items. All items listed on the website or verfied by our moderators.
-            In order to provide a safe enviorment all sells are handled by our moderators, and all the money made from the sell goes to the seller. We have seen our business grow
-            since 2006 and we can't wait for it to grow even more
+            Founded in 2006, we are a company dedicated to helping customers resell their unwanted items. All items listed on the website are verified by our moderators.
+            In order to provide a safe environment, all sales are handled by our moderators and all the money made from the sale goes to the seller. We have seen our business grow
+            since 2006 and we can't wait for it to grow even more.
         </p>
     </div>
 

@@ -32,6 +32,8 @@
 <?php
     session_start();
 	require_once  'connection.php';
+	include 'sanitization.php';
+	include 'alert.php';
 	$connection = mysqli_connect($db_hostname, $db_username,$db_password,$db_database);
 
 	if (!$connection)
@@ -56,7 +58,9 @@
 		
 
     if($username != "" && $pwd != ""){
-    $Ucount = 0;//Usercount
+    sanitizeString($username);
+    sanitizeString($pwd);
+    $Ucount = 0;//User count
     $Mcount = 0;//Moderator Count
     $PassCheck = false;
       $sql_query = "select count(*) as cntMod from Moderators where User_ID = '$username'";
@@ -120,7 +124,7 @@
 		}
 
        if (!$PassCheck){
-            echo "$Ucount";  
+            function_alert("Invalid login credentials");
 		}
 
          
