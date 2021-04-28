@@ -35,14 +35,15 @@
 	session_start();
 
 	 $role = '';
-                    if(!isset($_SESSION['role'])){
+                    if(!isset($_SESSION['role'])){//we are first going to check to role of the user. We do this so we know what to let them see G=Guest M= Moderator MU=Moderator/user
+					//U= User
                         $role = "G";
 					}
                     else{
                     $role = $_SESSION['role'];
                     
 					}
-	 if($role == 'MU' || $role == 'M'){
+	 if($role == 'MU' || $role == 'M'){//Output the correct homepage 
                         echo "<a href='ModeratorHomepage.php'> UserHomepage </a>";
                     
 					}
@@ -79,7 +80,7 @@
 				$result = mysqli_query($connection, $query);
 				if(mysqli_num_rows($result)> 0){
 		
-					while ($row= mysqli_fetch_array($result)){
+					while ($row= mysqli_fetch_array($result)){//output all the data thats active and is the correct Cat_ID
 						if($row['Category_ID']== "CAT" && $row ['Status_ID'] == "AC"){
 							echo "<tr><td>". $row['Advertisement_ID'] ."</td><td>" . $row['AdvTitle'] ."</td><td>" . $row['AdvDetails'] ."</td><td>" . $row['AdvDateTime'] ."</td><td>" . $row['Price'] ."</td><td>" 
 						. $row['User_ID'] ."</td><td>" . $row['Moderator_ID'] . "</td></tr>"; 

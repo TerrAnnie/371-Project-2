@@ -39,43 +39,45 @@
 	if (!$connection)
         die("Database access failed: " . mysqli_error($connection));
 
-	$username = "";
-    $role="";
+
+	$username = "";//define variables
+    $role="";//the users role in database 
     $pwd= "";
-    $usernameerr= $passworderr= " ";
+    $usernameerr= $passworderr= " ";//errors
 		
      
 
-	if(isset($_POST['username']) & !empty($_POST['username'])){
+	if(isset($_POST['username']) & !empty($_POST['username'])){//get the username
        $username = $_POST['username'];
    }
            
 
     
-	if(isset($_POST['pwd'])){
+	if(isset($_POST['pwd'])){//get the passowrd
         $pwd = $_POST['pwd'];
 	}
 		
 
-    if($username != "" && $pwd != ""){
+    if($username != "" && $pwd != ""){//as long as username and password aren't empty continue
     sanitizeString($username);
     sanitizeString($pwd);
     $Ucount = 0;//User count
     $Mcount = 0;//Moderator Count
-    $PassCheck = false;
+    $PassCheck = false;//bool to check if the password has been checked
       $sql_query = "select count(*) as cntMod from Moderators where User_ID = '$username'";
+      //we need to use the count to test if user_id was found in Users or Moderators or both
     
        $result= mysqli_query($connection, $sql_query);
         $row = mysqli_fetch_array($result);
-         $Mcount += $row['cntMod'];
+         $Mcount += $row['cntMod'];//add to count
 
        $sql_query = "select count(*) as cntUser from Users where User_ID ='".$username."'"; 
        $result= mysqli_query($connection, $sql_query);
         $row = mysqli_fetch_array($result);
-        $Ucount += $row['cntUser'];
+        $Ucount += $row['cntUser'];//add to count
     
 
-        if ($Ucount == 1){//Checks the stored hash password
+        if ($Ucount == 1){//Checks the stored hash password in users 
             $query = "Select * from Users where User_ID = '$username' ";
              $result= mysqli_query($connection, $query);
              $row = mysqli_fetch_array($result);
@@ -87,7 +89,7 @@
 
         
 		}
-         elseif ($Mcount == 1){//Checks the stored hash password
+         elseif ($Mcount == 1){//Checks the stored hash password in moderators 
             $query = "Select * from Moderators where User_ID = '$username' ";
              $result= mysqli_query($connection, $query);
              $row = mysqli_fetch_array($result);
@@ -123,7 +125,7 @@
         
 		}
 
-       if (!$PassCheck){
+       if (!$PassCheck){//invalid password
             function_alert("Invalid login credentials");
 		}
 

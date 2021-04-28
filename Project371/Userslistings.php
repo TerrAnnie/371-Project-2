@@ -103,7 +103,7 @@
                 
                if($role == 'MU'){
               
-               echo "<a href= 'ModeratorsListings.php'> Listings You Manage</a><br>";
+               echo "<a href= 'ModeratorsListings.php'> Listings You Manage</a><br>"; //Allow Access to this page if someone is a moderator and user 
                echo "<a href= 'ModeratorHomepage.php' > Approve or Disapprove Listings</a> <br>";
                 }
                
@@ -133,7 +133,7 @@
 				</tr>
 		</center>
         <?php
-          
+          //Allow them to view listings that are both pending and active or inactive
 				require_once 'connection.php';
             
 				$connection = mysqli_connect($db_hostname, $db_username,$db_password,$db_database);
@@ -179,7 +179,7 @@
 					<th> Moderator</th>
 				</tr>
 		</center>
-        <?php
+        <?php //Allow users to view pending listings
     
 				require_once 'connection.php';
 

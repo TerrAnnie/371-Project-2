@@ -139,7 +139,7 @@
 					<th> Moderator</th>
 				</tr>
 		</center>
-    <?php
+    <?php //used to output most recent active listings
 		
 				require_once 'connection.php';
 
@@ -157,7 +157,7 @@
                 $rowcount = mysqli_num_rows($result);
                 }
              
-                if($rowcount > 3){
+                if($rowcount > 3){//see if greater than three if so output the last couple of listings
                 $num = $rowcount - 3;
                 $rowCount = 0;
                while ($row= mysqli_fetch_array($result)){
@@ -169,7 +169,7 @@
 						}
 					}
 				}
-                else{
+                else{//otherwise just output all listings if less than 3
                 
 					while ($row= mysqli_fetch_array($result)){
                    

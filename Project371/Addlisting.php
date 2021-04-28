@@ -9,16 +9,16 @@
 	 die("Database access failed: " . mysqli_error($connection));
 
 	
-    $Adv_Title = $Adv_Descrp= $Category= " ";
+    $Adv_Title = $Adv_Descrp= $Category= " "; //most of this code is setting defaults
     
     $Adv_Price = 0;
     $TitleErr= $Adv_PriceErr= $AdvDescpErr= $CatError= "";
-    $User_ID = $_SESSION["username"];
+    $User_ID = $_SESSION["username"];//set the user_id so we can tell who this listing belongs to 
     $TodayDate= date("Y-m-d");
     $Sumbmited= "These Items have been succesfuly submitted";
     $SubmittedCheck = false;
     
-    if($_SERVER["REQUEST_METHOD"] == "POST"){
+    if($_SERVER["REQUEST_METHOD"] == "POST"){//majority of the code is testing to see if any fields are empty if they are empty throw an error
      
      if(empty($_POST['AdvTitle'])){
         $TitleErr= "Please enter an Advertisement title";
@@ -39,7 +39,7 @@
 	 }
      else{
         $Adv_Descrp=isset($_POST['AdvDetails'])?$_POST['AdvDetails']:"";
-        $Adv_Descrp = addslashes($Adv_Descrp);
+        $Adv_Descrp = addslashes($Adv_Descrp);//to prevent errors from occuring when apostorphes are entered
         sanitizeString($Adv_Descrp);
         $AdvDescpErr="";
 
@@ -69,17 +69,17 @@
         
      
 	 }
-     if (empty($CatError)&& empty($Adv_PriceErr)&& empty($AdvDescpErr)&& empty($TitleErr)){
-      $SubmittedCheck = true;
+     if (empty($CatError)&& empty($Adv_PriceErr)&& empty($AdvDescpErr)&& empty($TitleErr)){//check if the error var are empty 
+      $SubmittedCheck = true;//essentialy used to output error messages
     
     
-        $SQL= "Insert Into Advertisements(AdvTitle, AdvDetails, AdvDateTime, Price,Category_ID,User_ID,Moderator_ID,Status_ID) values (";
+        $SQL= "Insert Into Advertisements(AdvTitle, AdvDetails, AdvDateTime, Price,Category_ID,User_ID,Moderator_ID,Status_ID) values ("; //insert into database 
         $SQL.="'".$Adv_Title."','".$Adv_Descrp."','".$TodayDate."','".$Adv_Price."','".$Category."', '".$User_ID."', 'Null', 'PN')";
 
         $result = mysqli_query($connection, $SQL);
         if($result){
             echo "New record created successfully";
-            header('Location: Userslistings.php');
+            header('Location: Userslistings.php'); //send the user to userlistings
          } 
          else {
              echo "Error: " . $SQL. "<br>" . mysqli_error($connection);
@@ -211,7 +211,7 @@ mysqli_close($connection);
 
    </form>
      <?php
-           echo "<p style = 'color:red'> $TitleErr </p>" ;
+           echo "<p style = 'color:red'> $TitleErr </p>" ; //output error messages
            echo "<p style = 'color:red'> $AdvDescpErr </p>" ;
            echo "<p style = 'color:red'> $Adv_PriceErr </p>" ;
            echo "<p style = 'color:red'> $CatError </p>" ;
@@ -233,14 +233,14 @@ mysqli_close($connection);
                <a href= "ELCsales.php"> Electronic Listings </a><br>
                <a href= "CCAsales.php"> ChildCare Listings</a><br>
                <a href= "HOUsales.php"> Housing Listings</a><br>
-                <?php 
+                <?php //depending on the role of the user we may only want them to view certain things so users will only be able to add listings our view their listings
                
                $role= $_SESSION['role'];
                if($role == 'MU' || $role == 'U'){
                echo "<a href= 'AddListing.php' Add Listings</a> <br>";
                echo "<a href = 'Userslistings.php'> Your Listings </a> <br>";
                 }
-                if($role == 'M' || $role == 'MU'){
+                if($role == 'M' || $role == 'MU'){//technically a mod should never be on this page but just in case
                 echo " <a href ='ModeratorHomepage.php' >  Approve or Dissaprove Listings</a> <br>";
                 echo " <a href= 'ModeratorsListings.php'> Moderator Listings </a><br>";
 				}

@@ -48,7 +48,7 @@
    
 </body>
 </html>
-<?php
+<?php//Php to insert sign in credentials into database
     session_start();
 	require_once 'connection.php';
     include 'sanitization.php';
@@ -61,19 +61,19 @@
 
 	}
 
-	$fname=$lname=$username =$pwd= $confirmpwd=" ";
+	$fname=$lname=$username =$pwd= $confirmpwd=" ";//Declare variables
     $usernameerr= $passworderr= $confirmpwderr= $fnameerr=$lnameerr="not empty";
-    if($_SERVER["REQUEST_METHOD"] == "POST"){
+    if($_SERVER["REQUEST_METHOD"] == "POST"){//Stop from outputting error messages before anything is turned in
 
  
 
 		
-		    if(empty($_POST['fname'])){
+		    if(empty($_POST['fname'])){//check if this field is empty 
                 function_alert("Please fill out the first name field");
             
 		    }
 		    else{
-		        $fname= isset ($_POST['fname']) ?$_POST['fname']:"";
+		        $fname= isset ($_POST['fname']) ?$_POST['fname']:"";//assign
                $fnameerr="";
 		    }
 		    if(empty($_POST['lname'])){
@@ -88,9 +88,9 @@
                 
 		    }
             
-		    else{
+		    else{//This else will assign username to what was given by the user we will then check to see if it exists in our database if it exists we will output an error message
                  
-			    $username= isset ($_POST['username']) ?$_POST['username']:"";
+			    $username= isset ($_POST['username']) ?$_POST['username']:""; 
 			    sanitizeString($username);
                 $query_find= "Select User_ID from Users where User_ID = '$username'";
                 $result= mysqli_query($connection, $query_find);
@@ -111,14 +111,14 @@
                
                 
 		    }
-		    if(empty($_POST['pwd'])){
+		    if(empty($_POST['pwd'])){//check if password is empty
                 function_alert("Please fill out the password field");
 		    }
-             if(strlen($_POST['pwd'])< 8){
+             if(strlen($_POST['pwd'])< 8){//check if the length is greater than 8
                  function_alert("Please enter a password at least 8 characters long");
 			}
           
-		    else{
+		    else{//else assign password and confirm it matches with the confirm pass
 			    $pwd= isset ($_POST['pwd']) ?$_POST['pwd']:"";
                 $passworderr="";
             
@@ -144,14 +144,14 @@
             
 		    
 		   
-		    if(empty($usernameerr)&& empty($passworderr) && empty($confirmpwderr) && empty($lnameerr) && empty($fnameerr)){
+		    if(empty($usernameerr)&& empty($passworderr) && empty($confirmpwderr) && empty($lnameerr) && empty($fnameerr)){//If no errors then insert the items into the database
 			
 			   sanitizeString($pwd);
 			   sanitizeString($confirmpwd);
 			   sanitizeString($lname);
 			   sanitizeString($fname);
 			   sanitizeString($username);
-               $password = password_hash($pwd, PASSWORD_DEFAULT, array  ('cost' => 12));
+               $password = password_hash($pwd, PASSWORD_DEFAULT, array  ('cost' => 12));//hash the password and salt it
 			    $sql= "Insert into Users(User_ID, UserFirst_Name, UserLast_Name, User_Pass) values (";
                 $sql.="'".$username."','".$fname."','".lname."','".$password."' )";
 
@@ -162,8 +162,8 @@
                     else {
                         echo "Error: " . $sql . "<br>" . mysqli_error($connection);
                     }
-			    $_SESSION["username"] = $username;
-                 $_SESSION["role"] = "U";
+			    $_SESSION["username"] = $username; //start the session assign the username
+                 $_SESSION["role"] = "U";//create a U role which means user
                 header('Location: userhomepage.php');
 			    if(!result){
 				    die("database access denied") . mysqli_error($connection);

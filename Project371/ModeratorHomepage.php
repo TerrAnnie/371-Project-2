@@ -9,17 +9,17 @@
 
 	}
 
-    $ID_Number= 0;
-    $Status="";
+    $ID_Number= 0;//id of listing
+    $Status="";//status of listing
     $ID_Numbererr=$Status_Err= "";
-    $Moderator_ID = $_SESSION['username'];
+    $Moderator_ID = $_SESSION['username'];//moderator id is the username they have signed in with 
 
      if($_SERVER["REQUEST_METHOD"] == "POST"){
         if(empty($_POST['id_num'])){
     
             $ID_Number= "Please enter a number";
 		}
-        else{
+        else{//check if the number exists if not error message 
           $ID_Number = isset($_POST['id_num'])?$_POST['id_num']:"";
           $query = "Select * from Advertisements where Advertisement_ID = '$ID_Number'";
           $result= mysqli_query($connection, $query);
@@ -27,12 +27,12 @@
           if(mysqli_num_rows($result)==0){
             $ID_Numbererr="This ID_Number doesn't exist";
 		  }
-         else{
+         else{//check if something is already set 
       
           if($row['Status_ID'] != "PN"){
             $ID_Numbererr= "This ID_Doesn't need approval";
 		  }
-           if($row['User_ID'] == $Moderator_ID){
+           if($row['User_ID'] == $Moderator_ID){//check if the mod is trying to approve their own listing
             $ID_Numbererr ="You can't edit your own listing";
 		  }
           
@@ -56,7 +56,7 @@
        $Status_Err="";
 	}
 
-    if (empty($Status_Err) && empty($ID_Numbererr)){
+    if (empty($Status_Err) && empty($ID_Numbererr)){//Update the advertisement to the new status
         $Update_Query= "Update Advertisements Set Status_ID = '$Status' where Advertisement_ID = '$ID_Number'";
          $result = mysqli_query($connection, $Update_Query);
           $SetModQuery= "Update Advertisements Set Moderator_ID ='$Moderator_ID' where Advertisement_ID = '$ID_Number'";
@@ -189,7 +189,7 @@
             </form>
              
              <?php
-             echo"<p style = 'color:red'> $ID_Numbererr </p>";
+             echo"<p style = 'color:red'> $ID_Numbererr </p>"; //output the errors
              echo "<p style = 'color:red'> $Status_Err </p>";
              ?>
 
@@ -208,7 +208,7 @@
                <?php 
                $role= $_SESSION['role'];
               
-               if($role == 'MU'){
+               if($role == 'MU'){//if they are a user as well let them acess these pages
               
                echo "<a href= 'AddListing.php'> Add Listings</a> <br>";
                echo "<a href = 'Userslistings.php'> Your Listings </a> <br>";
@@ -245,7 +245,7 @@
 					<th> Moderator</th>
 				</tr>
 		</center>
-        <?php
+        <?php //output the listings needed for approval
 				require_once 'connection.php';
 
 				$connection = mysqli_connect($db_hostname, $db_username,$db_password,$db_database);

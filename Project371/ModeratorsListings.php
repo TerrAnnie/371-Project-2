@@ -127,7 +127,7 @@
 					<th> Status_ID</th>
 				</tr>
 		</center>
-        <?php
+        <?php //output all the listings this person manages
             session_start();
 				require_once 'connection.php';
 

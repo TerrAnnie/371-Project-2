@@ -34,7 +34,8 @@
 	<?php
 	session_start();
 	 $role = '';
-                    if(!isset($_SESSION['role'])){
+                    if(!isset($_SESSION['role'])){ //we are first going to check to role of the user. We do this so we know what to let them see G=Guest M= Moderator MU=Moderator/user
+					//U= User
                         $role = "G";
 					}
                     else{
@@ -44,7 +45,7 @@
 					 
 
 					 
-					if($role == 'MU' || $role == 'M'){
+					if($role == 'MU' || $role == 'M'){ //set where you want them to go from there we only want to show the users homepage
                         echo "<a href='ModeratorHomepage.php'> UserHomepage </a>";
                     
 					}
@@ -78,7 +79,7 @@
 
 				$query= "select Advertisement_ID, AdvTitle,AdvDetails,AdvDateTime,Price,Category_ID,User_ID,Moderator_ID, Status_ID from Advertisements";
 				
-				$result = mysqli_query($connection, $query);
+				$result = mysqli_query($connection, $query); //output all the data thats active and is the correct Cat_ID
 				if(mysqli_num_rows($result)> 0){
 		
 					while ($row= mysqli_fetch_array($result)){

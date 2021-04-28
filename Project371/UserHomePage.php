@@ -42,7 +42,7 @@
             position: absolute;
             font-size: 20px;
             right: -950px;
-            height: 300px;
+            height: 250px;
             width: 300px;
             margin: 0.5px;
         }
@@ -56,6 +56,21 @@
             width: 500px;
             margin: 0.5px;
         }
+         table,th {
+				border: 1px solid black;
+				background-color: lightblue;
+				
+			}
+
+			}
+
+            table {
+                width: 70%;
+            }
+
+            td {
+                border: 1px solid black;
+            }
         }
     </style>
 </head>
@@ -76,7 +91,7 @@
 
         </div>
         <div class="d">
-            <h2> Newest Listings </h2> 
+            <h2> Welcome Back</h2> 
 
 
         </div>
@@ -96,8 +111,76 @@
         </div>
     </div>
     <br>
+ <div>
+        <center><h2> <b> Your Recent Listings </b></h2> </center>
+    </div>
+    <div>
+    <center>
+			<table>
+				<tr>
+					<th> Advertisement ID </th>
+					<th> Advertisement Name    </th>
+					<th> Advertisement Description</th>
+					<th> Date Posted</th>
+					<th> Price</th>
+					<th> Published By:</th>
+					<th> Moderator</th>
+				</tr>
+		</center>
+    <?php // this code wil output the  most recent active listings
+		
+				require_once 'connection.php';
+                session_start();
+                $username = $_SESSION['username'];
+				$connection = mysqli_connect($db_hostname, $db_username,$db_password,$db_database);
 
-    <center><h2> <b> Today's Listings </b></h2> </center>
+				
+				if (!$connection){
+					die("Database access failed: " . mysqli_error($connection));
+					}
+
+				$query= "select Advertisement_ID, AdvTitle,AdvDetails,AdvDateTime,Price,Category_ID,User_ID,Moderator_ID, Status_ID from Advertisements";
+				
+				$result = mysqli_query($connection, $query);
+				if(mysqli_num_rows($result)> 0){
+                $rowcount = mysqli_num_rows($result);
+                }
+             
+                if($rowcount > 3){ //if the row count is greater than 3 output
+                $num = $rowcount - 3;
+                $rowCount = 0;
+               while ($row= mysqli_fetch_array($result)){
+                        $rowCount +=1;
+						if($row ['Status_ID'] == "AC" && $rowCount >= $num && $row['User_ID'] == $username ){
+							echo "<tr><td>". $row['Advertisement_ID'] ."</td><td>" . $row['AdvTitle'] ."</td><td>" . $row['AdvDetails'] ."</td><td>" . $row['AdvDateTime'] ."</td><td>" . $row['Price'] ."</td><td>" 
+						    . $row['User_ID'] ."</td><td>" . $row['Moderator_ID'] . "</td></tr>"; 
+					
+						}
+					}
+				}
+                else{
+                
+					while ($row= mysqli_fetch_array($result)){//otherwise just output
+                   
+						if($row ['Status_ID'] == "AC"){
+							echo "<tr><td>". $row['Advertisement_ID'] ."</td><td>" . $row['AdvTitle'] ."</td><td>" . $row['AdvDetails'] ."</td><td>" . $row['AdvDateTime'] ."</td><td>" . $row['Price'] ."</td><td>" 
+						. $row['User_ID'] ."</td><td>" . $row['Moderator_ID'] . "</td></tr>"; 
+					
+						}
+					}
+                   
+				}
+            
+              
+		
+					
+					
+					
+
+				mysqli_close($connection);
+				?>
+                </table>
+    </div>
 
 </body>
 </html>
