@@ -30,7 +30,7 @@
             position: absolute;
             font-size: 20px;
             right: -950px;
-            height: 300px;
+            height: 250px;
             width: 300px;
             margin: 0.5px;
         }
@@ -44,6 +44,21 @@
             width: 500px;
             margin: 0.5px;
         }
+        table,th {
+				border: 1px solid black;
+				background-color: lightblue;
+				
+			
+
+			}
+
+            table {
+                width: 70%;
+            }
+
+            td {
+                border: 1px solid black;
+            }
         }
     </style>
 
@@ -109,14 +124,73 @@
     </div>
     <br>
     <div>
-        <center><h2> <b> Today's Listings </b></h2> </center>
+        <center><h2> <b> Recent Listings </b></h2> </center>
+    </div>
+    <div>
+    <center>
+			<table>
+				<tr>
+					<th> Advertisement ID </th>
+					<th> Advertisement Name    </th>
+					<th> Advertisement Description</th>
+					<th> Date Posted</th>
+					<th> Price</th>
+					<th> Published By:</th>
+					<th> Moderator</th>
+				</tr>
+		</center>
+    <?php
+		
+				require_once 'connection.php';
+
+				$connection = mysqli_connect($db_hostname, $db_username,$db_password,$db_database);
+
+				
+				if (!$connection){
+					die("Database access failed: " . mysqli_error($connection));
+					}
+
+				$query= "select Advertisement_ID, AdvTitle,AdvDetails,AdvDateTime,Price,Category_ID,User_ID,Moderator_ID, Status_ID from Advertisements";
+				
+				$result = mysqli_query($connection, $query);
+				if(mysqli_num_rows($result)> 0){
+                $rowcount = mysqli_num_rows($result);
+                }
+             
+                if($rowcount > 3){
+                $num = $rowcount - 3;
+                $rowCount = 0;
+               while ($row= mysqli_fetch_array($result)){
+                        $rowCount +=1;
+						if($row ['Status_ID'] == "AC" && $rowCount >= $num){
+							echo "<tr><td>". $row['Advertisement_ID'] ."</td><td>" . $row['AdvTitle'] ."</td><td>" . $row['AdvDetails'] ."</td><td>" . $row['AdvDateTime'] ."</td><td>" . $row['Price'] ."</td><td>" 
+						    . $row['User_ID'] ."</td><td>" . $row['Moderator_ID'] . "</td></tr>"; 
+					
+						}
+					}
+				}
+                else{
+                
+					while ($row= mysqli_fetch_array($result)){
+                   
+						if($row ['Status_ID'] == "AC"){
+							echo "<tr><td>". $row['Advertisement_ID'] ."</td><td>" . $row['AdvTitle'] ."</td><td>" . $row['AdvDetails'] ."</td><td>" . $row['AdvDateTime'] ."</td><td>" . $row['Price'] ."</td><td>" 
+						. $row['User_ID'] ."</td><td>" . $row['Moderator_ID'] . "</td></tr>"; 
+					
+						}
+					}
+                   
+				}
+            
+              
+		
+					
+					
+					
+
+				mysqli_close($connection);
+				?>
+                </table>
     </div>
 </body>
 </html>
-<?php
-	require_once  'connection.php';
-	$connection = mysqli_connect($db_hostname, $db_username,$db_password,$db_database);
-
-	if (!$connection)
-        die("Database access failed: " . mysqli_error($connection));
-?>

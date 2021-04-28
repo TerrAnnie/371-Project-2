@@ -2,7 +2,7 @@
     session_start();
 
 	require_once 'connection.php';
-
+     include 'sanitization.php';
 	$connection = mysqli_connect($db_hostname, $db_username,$db_password,$db_database);
 
 	if (!$connection)
@@ -26,6 +26,7 @@
 	 }
      else{
         $Adv_Title=isset($_POST['AdvTitle'])?$_POST['AdvTitle']:"";
+        sanitizeString($Adv_Title);
         $TitleErr= "";
 
      
@@ -36,6 +37,7 @@
 	 }
      else{
         $Adv_Descrp=isset($_POST['AdvDetails'])?$_POST['AdvDetails']:"";
+        sanitizeString($Adv_Descrp);
         $AdvDescpErr="";
 
      
@@ -46,6 +48,7 @@
 	 }
      else{
         $Adv_Price=isset($_POST['Price'])?$_POST['Price']:"";
+       
        $Adv_PriceErr= "";
 
      

@@ -51,7 +51,7 @@
 					
 					}
 					?>
-	<center> <h1> Car and Truck Sales </h1> </center>
+	<center> <h1> Electronic Sales </h1> </center>
 		<center>
 			<table>
 				<tr>
@@ -80,7 +80,7 @@
 				if(mysqli_num_rows($result)> 0){
 		
 					while ($row= mysqli_fetch_array($result)){
-						if($row['Category_ID']== "CAT" && $row ['Status_ID'] == "AC"){
+						if($row['Category_ID']== "ELC" && $row ['Status_ID'] == "AC"){
 							echo "<tr><td>". $row['Advertisement_ID'] ."</td><td>" . $row['AdvTitle'] ."</td><td>" . $row['AdvDetails'] ."</td><td>" . $row['AdvDateTime'] ."</td><td>" . $row['Price'] ."</td><td>" 
 						. $row['User_ID'] ."</td><td>" . $row['Moderator_ID'] . "</td></tr>"; 
 					
@@ -93,7 +93,7 @@
 				mysqli_close($connection);
 				?>
 
-
+				</table>
 
 
 

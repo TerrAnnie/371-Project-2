@@ -93,7 +93,7 @@
 				}
 				mysqli_close($connection);
 				?>
-
+				</table>
 
 
 
