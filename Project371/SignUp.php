@@ -145,14 +145,16 @@
 		    
 		   
 		    if(empty($usernameerr)&& empty($passworderr) && empty($confirmpwderr) && empty($lnameerr) && empty($fnameerr)){
-			   echo "Working";
+			
 			   sanitizeString($pwd);
 			   sanitizeString($confirmpwd);
 			   sanitizeString($lname);
 			   sanitizeString($fname);
 			   sanitizeString($username);
                $password = password_hash($pwd, PASSWORD_DEFAULT, array  ('cost' => 12));
-			    $sql= "Insert into Users(User_ID, UserFirst_Name, UserLast_Name, User_Pass) values ('$username','$fname', '$lname', '$password')";
+			    $sql= "Insert into Users(User_ID, UserFirst_Name, UserLast_Name, User_Pass) values (";
+                $sql.="'".$username."','".$fname."','".lname."','".$password."' )";
+
 			    $result= mysqli_query($connection, $sql);
                 if (mysqli_query($connection, $sql)) {
                     echo "New record created successfully";
