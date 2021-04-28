@@ -9,7 +9,7 @@
 	 die("Database access failed: " . mysqli_error($connection));
 
 	
-    $Adv_Title = $Adv_Descrp= $Category_ID= " ";
+    $Adv_Title = $Adv_Descrp= $Category= " ";
     
     $Adv_Price = 0;
     $TitleErr= $Adv_PriceErr= $AdvDescpErr= $CatError= "";
@@ -22,10 +22,12 @@
      
      if(empty($_POST['AdvTitle'])){
         $TitleErr= "Please enter an Advertisement title";
+
      
 	 }
      else{
         $Adv_Title=isset($_POST['AdvTitle'])?$_POST['AdvTitle']:"";
+        $Adv_Title = addslashes($Adv_Title);//to prevent any kind of error
         sanitizeString($Adv_Title);
         $TitleErr= "";
 
@@ -37,6 +39,7 @@
 	 }
      else{
         $Adv_Descrp=isset($_POST['AdvDetails'])?$_POST['AdvDetails']:"";
+        $Adv_Descrp = addslashes($Adv_Descrp);
         sanitizeString($Adv_Descrp);
         $AdvDescpErr="";
 
@@ -62,40 +65,28 @@
      $CatError= "";
     
  
-        $Category_ID=isset($_POST['Category_ID'])?$_POST['Category_ID']:"";
-        if($Category_ID == "Cars and Trucks"){
-            $Category_ID = "CAT";
-		}
-        if($Category_ID == "Housing"){
-            $Category_ID = "HOU";
-		}
-        if($Category_ID == "Electronics"){
-            $Category_ID = "ELC";
-		}
-        if($Category_ID == "Child Care"){
-            $Category_ID = "CCA";
-		}
+        $Category=isset($_POST['Category_ID'])?$_POST['Category_ID']:"";
+        
      
 	 }
      if (empty($CatError)&& empty($Adv_PriceErr)&& empty($AdvDescpErr)&& empty($TitleErr)){
       $SubmittedCheck = true;
     
     
-        $query= "Insert Into Advertisements(AdvTitle, AdvDetails, AdvDateTime, Price,Category_ID,User_ID,Moderator_ID,Status_ID) values 
-        ('$Adv_Title','$Adv_Descrp', '$TodayDate', 
-        '$Adv_Price', '$Category_ID',
-        '$User_ID',
-        'Null', 'PN')";
-        $result = mysqli_query($connection, $query);
+        $SQL= "Insert Into Advertisements(AdvTitle, AdvDetails, AdvDateTime, Price,Category_ID,User_ID,Moderator_ID,Status_ID) values (";
+        $SQL.="'".$Adv_Title."','".$Adv_Descrp."','".$TodayDate."','".$Adv_Price."','".$Category."', '".$User_ID."', 'Null', 'PN')";
+
+        $result = mysqli_query($connection, $SQL);
         if($result){
             echo "New record created successfully";
+            header('Location: Userslistings.php');
          } 
          else {
-             echo "Error: " . $query. "<br>" . mysqli_error($connection);
+             echo "Error: " . $SQL. "<br>" . mysqli_error($connection);
             }
         
-                header('Location: AddListing.php');
-			    if(!result){
+               
+			    if(!$result){
 				    die("database access denied") . mysqli_error($connection);
 			    }
         
