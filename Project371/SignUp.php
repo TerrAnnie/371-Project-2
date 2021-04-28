@@ -97,6 +97,12 @@
                 if(mysqli_num_rows($result)>0){
                     function_alert("This User ID is already in use. Please try again");
 				}
+                $query_find= "Select User_ID from Moderators where User_ID = '$username'";
+                $result= mysqli_query($connection, $query_find);
+                 if(mysqli_num_rows($result)>0){
+                    function_alert("This User ID is already in use. Please try again");
+				}
+                
                 else{
                  $usernameerr="";
 				}
