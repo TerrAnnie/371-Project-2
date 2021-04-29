@@ -48,7 +48,7 @@
    
 </body>
 </html>
-<?php//Php to insert sign in credentials into database
+<?php //Php to insert sign in credentials into database
     session_start();
 	require_once 'connection.php';
     include 'sanitization.php';
