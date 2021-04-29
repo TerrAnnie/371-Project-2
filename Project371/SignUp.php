@@ -164,7 +164,7 @@
                     }
 			    $_SESSION["username"] = $username; //start the session assign the username
                  $_SESSION["role"] = "U";//create a U role which means user
-                header('Location: userhomepage.php');
+                header('Location: userHomepage.php');
 			    if(!result){
 				    die("database access denied") . mysqli_error($connection);
 			    }
